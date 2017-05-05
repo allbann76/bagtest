@@ -1,0 +1,17 @@
+doctype html
+html(lang="ru")
+  head
+    title= test
+    script(type='text/javascript' src='/main.js').
+    link(href='/main.css', rel='stylesheet')
+  body
+#bgblock
+  p Спасибо за участие
+.container
+ ul.bag_body
+  - for (var x = 0; x < 9; x++){
+  - var url = '/imgs/'+(x+1)+'.jpg';
+  li.bag(id= x)
+   img(src=url)
+  -}
+

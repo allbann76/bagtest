@@ -24,43 +24,39 @@ app.use(cookieParser());
 
 app.get('/',(req,res,next)=>{
 
-	 
-
-	if(!req.cookies.sid){
-
+	if(req.cookies.sid){
+		if(!users[req.cookies.sid]){
+			console.log('cookies nod found in users');
+			console.log(req.cookies.sid);
+			res.clearCookie('sid');
+			res.redirect('/');
+		}else if(users[req.cookies.sid].reduce((prev,curr)=>{return prev+curr;})<5){
+			res.render('index');
+		}else{
+			res.render('end');
+		}
+	}else{
 		let ids = getRand(10000,99999);
 
 		users[ids] = [0,0,0,0,0,0,0,0,0];
 
-		res.cookie('sid',ids,{ maxAge: 10*1000*1, httpOnly: true });
-		res.render('end',{'test':'olololoo123',urls:{0:'/imgs/1.jpg',1:'/imgs/2.jpg',2:'/imgs/3.jpg',3:'/imgs/4.jpg',4:'/imgs/5.jpg',5:'/imgs/6.jpg',6:'/imgs/7.jpg',7:'/imgs/8.jpg',8:'/imgs/9.jpg'}})
-
-	}else{
-		if(users[req.cookies.sid] && users[req.cookies.sid].reduce((prev,curr)=>{return prev+curr;})<5){
-			
-				console.log(users[req.cookies.sid]);
-				res.render('end',{'test':'olololoo123',urls:{0:'/imgs/1.jpg',1:'/imgs/2.jpg',2:'/imgs/3.jpg',3:'/imgs/4.jpg',4:'/imgs/5.jpg',5:'/imgs/6.jpg',6:'/imgs/7.jpg',7:'/imgs/8.jpg',8:'/imgs/9.jpg'}})
-			
-		}else{
-			//res.clearCookie('sid');
-			res.end('stop');
-		}
+		res.cookie('sid',ids,{ maxAge: 60*1000*100, httpOnly: true });
+		res.render('index');
 	}
-	
+
 })
 
 app.get('/click/:id',(req,res,next)=>{
-		//
-		if(users[req.cookies.sid] && users[req.cookies.sid][req.params.id]<1){
+		let pid = req.params.id;
+		let cid = req.cookies.sid;
+		if(users[cid] && users[cid][pid]<1){
 
-			if(users[req.cookies.sid].reduce((prev,curr)=>{return prev+curr;})<5){
-				users[req.cookies.sid][req.params.id]++;
-			}else{
-				res.end('stop');
-			}
-		}
-		console.log(users);
-		console.log(users[req.cookies.sid].reduce((prev,curr)=>{return prev+curr;}))
+		 	if(users[cid].reduce((prev,curr)=>{return prev+curr;})<5){
+		 		users[cid][pid]++;
+		 	}else{
+		 		res.end('stop');
+		 	}
+		 }
 		res.end();
 
 })

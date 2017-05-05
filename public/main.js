@@ -32,6 +32,7 @@ window.onload = function(){
 
 	bags.forEach(function(item){
 		item.addEventListener('click',function(e){
+			this.style.background = 'red';
 			sendClick(this.id);
 		});
 	})
