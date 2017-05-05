@@ -1,0 +1,26 @@
+body {
+	background: rgba(0,0,0,1);
+	margin: 0; 
+	padding: 0;
+	font: 16px Arial, Tahoma, sans-serif;
+	}
+
+div.container{
+		margin: 0 auto;
+		margin-top: 2em;
+		padding: 0 0 0 0;
+		max-width: 37.5em;
+		background: rgba(0,0,0,1);
+		letter-spacing:-0.3em;
+	    line-height: 0em;
+		}
+
+div.bag{margin: 0;
+		width: 33.3%;
+		display: inline-block;
+		}
+
+div.bag img {
+		margin: 0;
+		max-width: 100%;
+		}
